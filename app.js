@@ -57,3 +57,30 @@ window.addEventListener("appinstalled", () => {
     installButton.style.display = "none";
   }
 });
+// PWA Install
+let deferredPrompt;
+const installButton = document.getElementById("installButton");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installButton.style.display = "block";
+});
+
+installButton.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+
+  const { outcome } = await deferredPrompt.userChoice;
+
+  if (outcome === "accepted") {
+    installButton.style.display = "none";
+  }
+
+  deferredPrompt = null;
+});
+
+window.addEventListener("appinstalled", () => {
+  installButton.style.display = "none";
+});
