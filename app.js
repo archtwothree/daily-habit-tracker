@@ -24,3 +24,36 @@ function render(){
 form.addEventListener("submit",e=>{e.preventDefault();let name=input.value.trim();if(!name)return;if(habits.length>=MAX){msg(`Keep it focused: ${MAX} habits max.`);return}habits.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),name,done:[]});input.value="";save();render();input.focus();msg("Habit added. 🌱")});
 render();
 if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("./service-worker.js").catch(()=>{}));
+let deferredPrompt;
+const installButton = document.getElementById("installButton");
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  if (installButton) {
+    installButton.style.display = "inline-flex";
+  }
+});
+
+if (installButton) {
+  installButton.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+
+    const { outcome } = await deferredPrompt.userChoice;
+
+    if (outcome === "accepted") {
+      installButton.style.display = "none";
+    }
+
+    deferredPrompt = null;
+  });
+}
+
+window.addEventListener("appinstalled", () => {
+  if (installButton) {
+    installButton.style.display = "none";
+  }
+});
