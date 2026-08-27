@@ -1,0 +1,11 @@
+{
+  "name":"Daily Habit Tracker",
+  "short_name":"Habits",
+  "description":"A simple daily habit tracker.",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#f6f7fb",
+  "theme_color":"#ffffff",
+  "orientation":"portrait-primary",
+  "icons":[{"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
