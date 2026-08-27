@@ -1,5 +1,4 @@
-const CACHE = "daily-habit-tracker-v2";
-
+const CACHE = "daily-habit-tracker-v3";
 const FILES = [
   "./",
   "./index.html",
